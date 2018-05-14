@@ -1,7 +1,7 @@
 var https = require('https');
 var str = '';
 
-function getAndPrintHTML (options) {
+function getAndPrintHTML (options, callback) {
 
   https.get(options, function (response){
     response.setEncoding('utf8');
@@ -11,19 +11,18 @@ function getAndPrintHTML (options) {
       // to call it back into the function
     });
     response.on('end', function(){
-      console.log('Nice!! Length:', str);
+      callback(str);
     });
   });
-
 }
 
 var requestOptions = {
   host: 'sytantris.github.io',
-  path: '/http-examples/step3.html'
+  path: '/http-examples/step4.html'
 };
 
- getAndPrintHTML(requestOptions);
+  function printHTML (html) {
+    console.log(html);
+  }
 
- // by passing the options parameter, we are able to create new
- // variables and pass them through the function when returning
- // it
+getAndPrintHTML(requestOptions, printHTML);
